@@ -205,11 +205,11 @@ int main(int argc, char **argv){
 			for(j = 0; j < row; j++)
 				{
 					fscanf(R, "%d", &pixel_val);
-					// if(pixel_val < 4){
-					// 	if(seg[k] == pixel_val) accuracy++;
-					// 	else faulty++;
-					// }
-					// k++;
+					if(pixel_val < 4){
+						if(seg[k] == pixel_val) accuracy++;
+						else faulty++;
+					}
+					k++;
 					if(pixel_val < 1){
 						if(seg[ww]== pixel_val) a_bg++;
 						else f_bg++;

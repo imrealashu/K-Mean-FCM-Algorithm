@@ -16,10 +16,10 @@ jQuery(function(){
 	$('#kmean').click(function(){
 		$.post('images/process.php',{data:'kmean',data1:$('#img1').attr('data'),data2:$('#img2').attr('data')},function(data){
 			var accuracy = data.split("#");
-			$('#target_image2').html('<img src="images/seg0.jpg?a" class="img-thumbnail"/>');
-			$('#target_image2').append('<img src="images/seg1.jpg?b" class="img-thumbnail"/>');
-			$('#target_image2').append('<img src="images/seg2.jpg?c" class="img-thumbnail"/>');
-			$('#target_image2').append('<img src="images/seg3.jpg?d" class="img-thumbnail"/>');
+			$('#target_image2').html('<img src="images/seg0.jpg?aa" class="img-thumbnail"/>');
+			$('#target_image2').append('<img src="images/seg1.jpg?bb" class="img-thumbnail"/>');
+			$('#target_image2').append('<img src="images/seg2.jpg?cc" class="img-thumbnail"/>');
+			$('#target_image2').append('<img src="images/seg3.jpg?dd" class="img-thumbnail"/>');
 			$('#target_image2').append('<p>Background Accuracy: '+accuracy[4]+'%</p>');
 			$('#target_image2').append('<p>Grey Matter Accuracy: '+accuracy[3]+'%</p>');
 			$('#target_image2').append('<p>CSF Accuracy: '+accuracy[2]+'%</p>');

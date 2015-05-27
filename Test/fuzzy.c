@@ -75,7 +75,7 @@ int main(int argc, char **argv){
 
 	FILE *R; char str[20]; int row = 0, col = 0;
 
-	int i, j, k, pixel_val, accuracy, faulty, gm, faulty_gm, xx, csf , yy, faulty_csf, zz, wm, faulty_wm, bg, faulty_bg, ww;
+	int i, j, k, pixel_val, accuracy, faulty;
 	
 	R= fopen(argv[1],"r+");
 
@@ -102,17 +102,17 @@ int main(int argc, char **argv){
 	bakiHai = 1;
 	fclose(R);
 
-	// printf("\n\nInitial Clusters:: ");
-	// for(i=0; i<C; i++)
-	// 	printf("  %f", c[i]);
+	printf("\n\nInitial Clusters:: ");
+	for(i=0; i<C; i++)
+		printf("  %f", c[i]);
 
-	// printf("\nWorking... .. .");
+	printf("\nWorking... .. .");
 	Fuzzy_cMeans();
-	//printf("  done!");
+	printf("  done!");
 
-	// printf("\n\nFinal Clusters:: ");
-	// for(i=0; i<C; i++)
-	// 	printf("  %f", c[i]);
+	printf("\n\nFinal Clusters:: ");
+	for(i=0; i<C; i++)
+		printf("  %f", c[i]);
 
 	R = fopen("res.pgm","w+");
 	fprintf(R, "P2\n#\n");
@@ -138,28 +138,28 @@ int main(int argc, char **argv){
 	fprintf(R, "P2\n#\n");
 	fprintf(R, "%d %d\n%d\n", col, row, MAX_VAL);
 	for(i = 0; i < N; i++)
-		fprintf(R, "%d ", (seg[i] == 0) ? 0 : 255);
+		fprintf(R, "%d ", (seg[i] == 0) ? 255 : 0);
 	fclose(R);
 
 	R = fopen("seg1.pgm","w+");
 	fprintf(R, "P2\n#\n");
 	fprintf(R, "%d %d\n%d\n", col, row, MAX_VAL);
 	for(i = 0; i < N; i++)
-		fprintf(R, "%d ", (seg[i] == 1) ? 0 : 255);
+		fprintf(R, "%d ", (seg[i] == 1) ? 255 : 0);
 	fclose(R);
 
 	R = fopen("seg2.pgm","w+");
 	fprintf(R, "P2\n#\n");
 	fprintf(R, "%d %d\n%d\n", col, row, MAX_VAL);
 	for(i = 0; i < N; i++)
-		fprintf(R, "%d ", (seg[i] == 2) ? 0 : 255);
+		fprintf(R, "%d ", (seg[i] == 2) ? 255 : 0);
 	fclose(R);
 
 	R = fopen("seg3.pgm","w+");
 	fprintf(R, "P2\n#\n");
 	fprintf(R, "%d %d\n%d\n", col, row, MAX_VAL);
 	for(i = 0; i < N; i++)
-		fprintf(R, "%d ", (seg[i] == 3) ? 0 : 255);
+		fprintf(R, "%d ", (seg[i] == 3) ? 255 : 0);
 	fclose(R);
 
 
@@ -171,7 +171,7 @@ int main(int argc, char **argv){
 		fscanf(R, "%d", &row);
 		fscanf(R, "%d", &MAX_VAL);
 		
-		k = 0; accuracy = faulty = gm = faulty_gm = xx = csf = yy = faulty_csf = zz = wm = faulty_wm = bg = faulty_bg = ww = 0;
+		k = 0; accuracy = faulty = 0;
 		for(i = 0; i < col; i++)
 			for(j = 0; j < row; j++)
 				{
@@ -181,35 +181,9 @@ int main(int argc, char **argv){
 						else faulty++;
 					}
 					k++;
-					if(pixel_val < 1){
-			            if(seg[ww]== pixel_val) bg++;
-			            else faulty_bg++;
-			          }
-			        ww++;
-					if(pixel_val < 2 && pixel_val > 0){
-						if(seg[xx]== pixel_val) gm++;
-						else faulty_gm++;
-					}
-					xx++;
-
-					if(pixel_val < 3 && pixel_val > 1){
-						if(seg[yy]== pixel_val) csf++;
-						else faulty_csf++;
-					}
-					yy++;
-
-					if(pixel_val < 4 && pixel_val > 2){
-						if(seg[zz]== pixel_val) wm++;
-						else faulty_wm++;
-					}
-					zz++;
 				}
 		fclose(R);
-		printf("%.2f",(((float)(bg+gm+csf+wm)*100)/((float)(bg+gm+csf+wm)+(faulty_bg+faulty_csf+faulty_wm+faulty_gm))));
-		printf("#%.2f", (((float)gm*100)/((float)gm+faulty_gm)));//grey matter
-		printf("#%.2f", (((float)csf*100)/((float)csf+faulty_csf)));//csf
-		printf("#%.2f", (((float)wm*100)/((float)wm+faulty_wm)));//white matter
-		printf("#%.2f", (((float)wm*100)/((float)bg+faulty_bg)));//Background
+		printf("\nAccurate: %d\nFault: %d\n\nAccuracy: %.2f\n", accuracy, faulty, (((float)accuracy*100)/((float)accuracy+faulty)));
 	}
 	
 	return 0;
